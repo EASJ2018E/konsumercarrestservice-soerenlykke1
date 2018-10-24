@@ -1,12 +1,26 @@
-interface Person {
-    firstName: string;
-    lastName: string;
-}
 
-function greeter(person: Person): string {
-    return "Hello, " + person.firstName + " " + person.lastName;
-}
-let user: Person = { firstName: "John", lastName: "Doe" };
 
-let element: HTMLDivElement = <HTMLDivElement> document.getElementById("content");
-element.innerHTML = greeter(user);
+interface Icar {
+    model:string;
+    vendor:string;
+    price:number;
+
+    let buttonelement:HTMLButtonElement = <HTMLButtonElement> document.getElementById("getAllButton");
+    buttonelement.addEventListener("click",showAllCars)
+    function showAllCars():void {
+        
+        let uri : string = "http://rest-pele-easj-dk.azurewebsites.net/api/Cars"
+
+        axios.get<Icar[]>(uri)
+        .then(function(response:AxiosResponse<Icar[]>):void {
+
+            let result : string = "<ol>";
+            response.data.array.forEach((car : Icar) => {
+               result += "<li>" + car.model + car.vendor + car.price.toString() + "</li>"
+            });
+            result += "</ol>"
+        }
+        )
+        
+    }
+}
